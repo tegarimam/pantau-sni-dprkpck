@@ -5,161 +5,196 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pantau SNI - DPRKPCK</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         .hidden { display: none; }
         .tab-active { border-bottom: 4px solid #facc15; color: #facc15; }
-        .animate-fadeIn {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        .animate-fadeIn { animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-gray-50 font-sans text-gray-900">
 
     <nav class="bg-blue-900 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            
             <div class="flex items-center gap-3">
-                <img src="logo.png" alt="Logo DPRKPCK" class="h-12 w-auto object-contain bg-white p-1 rounded-full">
-                
+                <img src="logo.png" alt="Logo DPRKPCK" class="h-12 w-auto object-contain bg-white p-1 rounded-full shadow-sm">
                 <div>
-                    <h1 class="text-xl font-black tracking-tight leading-none">PANTAU SNI</h1>
-                    <p class="text-[10px] tracking-[0.2em] font-bold text-yellow-400 uppercase">DPRKPCK PROV. JAWA TIMUR</p>
+                    <h1 class="text-xl font-black tracking-tight leading-none uppercase">Pantau SNI</h1>
+                    <p class="text-[10px] tracking-[0.2em] font-bold text-yellow-400 uppercase">DPRKPCK Prov. Jawa Timur</p>
                 </div>
             </div>
-            
-            <div class="relative">
-                <button id="menuBtn" class="p-2 hover:bg-blue-800 rounded-lg transition">
-                    <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor"><path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg>
-                </button>
-                <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white text-gray-800 border rounded-xl shadow-xl overflow-hidden">
-                    <a href="#" class="block px-4 py-3 hover:bg-gray-50 border-b text-sm">Profil Pengguna</a>
-                    <a href="#" class="block px-4 py-3 hover:bg-gray-50 border-b text-sm">Panduan Penggunaan</a>
-                    <a href="#" class="block px-4 py-3 text-red-600 hover:bg-red-50 text-sm font-bold">Keluar</a>
-                </div>
-            </div>
+            <button id="menuBtn" class="p-2 hover:bg-blue-800 rounded-lg transition">
+                <svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor"><path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg>
+            </button>
         </div>
     </nav>
 
     <div class="max-w-7xl mx-auto p-4 md:p-8">
         
-        <div class="flex space-x-8 border-b-2 mb-8 text-sm font-bold text-gray-400 overflow-x-auto">
-            <button onclick="switchTab('library')" id="tab-library" class="pb-3 tab-active uppercase">📂 Wadah SNI</button>
-            <button onclick="switchTab('monitoring')" id="tab-monitoring" class="pb-3 uppercase">📝 Cek Kerja & Laporan</button>
+        <div class="flex space-x-6 border-b-2 mb-8 text-xs font-bold text-gray-400 overflow-x-auto whitespace-nowrap px-2">
+            <button onclick="switchTab('library')" id="tab-library" class="pb-3 tab-active uppercase">📂 1. Wadah SNI</button>
+            <button onclick="switchTab('koreksi')" id="tab-koreksi" class="pb-3 uppercase">🔍 2. Cek Excel (Auto)</button>
+            <button onclick="switchTab('upload')" id="tab-upload" class="pb-3 uppercase">📤 3. Laporan Final</button>
         </div>
 
         <div id="content-library" class="animate-fadeIn">
-            <h2 class="text-xl font-bold mb-4 text-gray-700">Gudang Dokumen Standar</h2>
+            <h2 class="text-xl font-bold mb-4 text-gray-700 italic uppercase font-black">Gudang Dokumen Standar</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
                 <div class="bg-white p-6 rounded-2xl border-l-8 border-blue-600 shadow-sm">
-                    <h3 class="font-bold text-lg mb-4 text-blue-900">BAGIAN BETON</h3>
-                    <div class="space-y-2">
-                        <button class="w-full text-left p-4 bg-gray-50 rounded-xl hover:bg-blue-50 border flex justify-between items-center transition">
-                            <span>Hitungan Tangga</span>
-                            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold">BUKA</span>
-                        </button>
-                        <button class="w-full text-left p-4 bg-gray-50 rounded-xl hover:bg-blue-50 border flex justify-between items-center transition">
-                            <span>Hitungan Balok</span>
-                            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold">BUKA</span>
-                        </button>
+                    <h3 class="font-bold text-sm mb-4 text-blue-900 uppercase">Beton & Struktur Umum</h3>
+                    <div class="space-y-2 text-sm font-medium">
+                        <a href="SNI 2847-2019 Persyaratan Beton Struktural Untuk Bangunan Gedung.pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-blue-50 transition">
+                            <span>SNI 2847-2019 (Beton)</span>
+                            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
+                        <a href="1727 - SNI 1727-2020 Beban desain minimum dan kriteria terkait untuk bangunan gedung dan struktur lain.pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-blue-50 transition">
+                            <span>SNI 1727-2020 (Beban)</span>
+                            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
+                        <a href="SNI 1726-2012.pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-blue-50 transition">
+                            <span>SNI 1726-2012 (Gempa)</span>
+                            <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
                     </div>
                 </div>
 
                 <div class="bg-white p-6 rounded-2xl border-l-8 border-gray-400 shadow-sm">
-                    <h3 class="font-bold text-lg mb-4 text-gray-700">BAGIAN BAJA</h3>
-                    <div class="space-y-2">
-                        <button class="w-full text-left p-4 bg-gray-50 rounded-xl hover:bg-gray-100 border flex justify-between items-center transition">
-                            <span>Hitungan Gording & Rangka</span>
-                            <span class="text-[10px] bg-gray-200 text-gray-600 px-2 py-1 rounded font-bold">BUKA</span>
-                        </button>
+                    <h3 class="font-bold text-sm mb-4 text-gray-700 uppercase">Baja & Pondasi</h3>
+                    <div class="space-y-2 text-sm font-medium">
+                        <a href="1729 - SNI 1729-2020 Spesifikasi untuk bangunan gedung baja struktural.pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-gray-100 transition">
+                            <span>SNI 1729-2020 (Baja)</span>
+                            <span class="text-[10px] bg-gray-200 text-gray-600 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
+                        <a href="SNI 8460-2017 Persyaratan Perancangan Geoteknik.pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-gray-100 transition">
+                            <span>SNI 8460-2017 (Geoteknik)</span>
+                            <span class="text-[10px] bg-gray-200 text-gray-600 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
+                        <a href="SNI_2052-2002-2017.pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-gray-100 transition">
+                            <span>SNI 2052-2017 (Tulangan)</span>
+                            <span class="text-[10px] bg-gray-200 text-gray-600 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
                     </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border-l-8 border-yellow-500 shadow-sm">
+                    <h3 class="font-bold text-sm mb-4 text-yellow-800 uppercase">Mekanikal & Elektrikal</h3>
+                    <div class="space-y-2 text-sm font-medium">
+                        <a href="0225 - SNI 0225-2020 Persyaratan Umum Instalasi Listrik (PUIL 2020).pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-yellow-50 transition">
+                            <span>PUIL 2020 (Listrik)</span>
+                            <span class="text-[10px] bg-yellow-100 text-yellow-800 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
+                        <a href="SNI 8153-2015 Sistem Plambing Pada Bangunan Gedung.pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-yellow-50 transition">
+                            <span>SNI 8153-2015 (Plambing)</span>
+                            <span class="text-[10px] bg-yellow-100 text-yellow-800 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border-l-8 border-green-600 shadow-sm text-sm">
+                    <h3 class="font-bold mb-4 text-green-800 uppercase">Metode Uji & Lainnya</h3>
+                    <div class="space-y-2 text-sm font-medium">
+                        <a href="SNI 4153-2019 - Metode Uji Penetrasi Standar (SPT) dan Pengambilan Contoh Tanah Dengan Tabung Belah (ASTM D 1586-11, IDT).pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-green-50 transition">
+                            <span>SNI 4153-2019 (SPT)</span>
+                            <span class="text-[10px] bg-green-100 text-green-800 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
+                        <a href="SNI 8064-2016.pdf" target="_blank" class="w-full text-left p-3 bg-gray-50 rounded-xl border flex justify-between items-center hover:bg-green-50 transition">
+                            <span>SNI 8064-2016</span>
+                            <span class="text-[10px] bg-green-100 text-green-800 px-2 py-1 rounded font-bold uppercase">Buka</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="content-koreksi" class="hidden animate-fadeIn text-center">
+            <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl border shadow-sm">
+                <h2 class="text-xl font-bold mb-2 text-gray-700 italic uppercase font-black">Validasi Excel Otomatis</h2>
+                <p class="text-xs text-gray-400 mb-8 font-medium italic">Sistem akan otomatis mengecek parameter dalam file Excel sesuai SNI.</p>
+                <div class="border-4 border-dashed border-blue-100 p-10 rounded-3xl mb-6">
+                    <input type="file" id="excelInput" accept=".xlsx, .xls" class="hidden">
+                    <label for="excelInput" class="cursor-pointer bg-blue-900 text-white px-8 py-4 rounded-2xl font-black shadow-lg hover:bg-blue-800 transition">
+                        PILIH FILE EXCEL
+                    </label>
+                </div>
+                <div id="excelStatus" class="min-h-[100px] flex items-center justify-center font-bold">
+                    <p class="text-gray-300 italic text-sm">Menunggu data input...</p>
                 </div>
             </div>
         </div>
 
-        <div id="content-monitoring" class="hidden animate-fadeIn">
-            <h2 class="text-xl font-bold mb-4 text-gray-700">Monitoring & Koreksi Otomatis</h2>
-            <div class="bg-white p-6 rounded-2xl border shadow-sm">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <p class="text-sm text-gray-500 mb-6 italic">Masukkan data dari lapangan/laporan mingguan untuk dicek kesesuaiannya dengan standar SNI.</p>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Item yang Dicek</label>
-                                <select id="itemKerja" class="w-full p-3 border-2 rounded-xl bg-gray-50 focus:border-blue-500 outline-none">
-                                    <option value="balok">Balok Beton (Tinggi Minimum)</option>
-                                </select>
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Panjang Bentang (mm)</label>
-                                    <input type="number" id="valL" placeholder="Contoh: 6000" class="w-full p-3 border-2 rounded-xl focus:border-blue-500 outline-none">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Tinggi Rencana (mm)</label>
-                                    <input type="number" id="valH" placeholder="Contoh: 400" class="w-full p-3 border-2 rounded-xl focus:border-blue-500 outline-none">
-                                </div>
-                            </div>
-                            <button onclick="runAutoCorrect()" class="w-full bg-blue-900 text-white font-black py-4 rounded-xl hover:bg-blue-800 transition shadow-lg">CEK KESESUAIAN SEKARANG</button>
-                        </div>
-                    </div>
-
-                    <div id="statusBox" class="bg-gray-100 border-2 border-dashed rounded-3xl flex flex-col items-center justify-center p-8 text-center min-h-[250px]">
-                        <p id="statusMsg" class="text-gray-400 text-sm font-bold uppercase tracking-widest">Menunggu Data Input...</p>
-                    </div>
+        <div id="content-upload" class="hidden animate-fadeIn">
+            <div class="max-w-2xl mx-auto bg-white p-8 rounded-3xl border shadow-sm">
+                <h2 class="text-xl font-bold mb-4 text-gray-700 italic uppercase font-black">Arsip Laporan Sesuai SNI</h2>
+                <p class="text-sm text-gray-500 mb-6 font-medium">Tempat penyimpanan final laporan mingguan yang sudah divalidasi dan benar.</p>
+                <div class="space-y-4">
+                    <input type="text" placeholder="ID Proyek / Nama Bangunan" class="w-full p-4 border-2 rounded-2xl outline-none focus:border-blue-500 bg-gray-50">
+                    <input type="file" class="w-full p-3 border-2 border-dotted rounded-2xl bg-gray-50 cursor-pointer">
+                    <button class="w-full bg-green-600 text-white font-black py-4 rounded-2xl shadow-lg hover:bg-green-700 transition uppercase tracking-widest">Kirim ke Arsip Digital</button>
                 </div>
             </div>
         </div>
+
     </div>
 
     <script>
-        // Tab Switcher
         function switchTab(tab) {
             document.getElementById('content-library').classList.toggle('hidden', tab !== 'library');
-            document.getElementById('content-monitoring').classList.toggle('hidden', tab !== 'monitoring');
+            document.getElementById('content-koreksi').classList.toggle('hidden', tab !== 'koreksi');
+            document.getElementById('content-upload').classList.toggle('hidden', tab !== 'upload');
+            
             document.getElementById('tab-library').classList.toggle('tab-active', tab === 'library');
-            document.getElementById('tab-monitoring').classList.toggle('tab-active', tab === 'monitoring');
+            document.getElementById('tab-koreksi').classList.toggle('tab-active', tab === 'koreksi');
+            document.getElementById('tab-upload').classList.toggle('tab-active', tab === 'upload');
         }
 
-        // Dropdown Logic
-        const menuBtn = document.getElementById('menuBtn');
-        const dropdown = document.getElementById('dropdownMenu');
-        menuBtn.onclick = () => dropdown.classList.toggle('hidden');
+        // Logic Auto-Correct Excel
+        document.getElementById('excelInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            const statusDiv = document.getElementById('excelStatus');
 
-        // Logic Auto-Correct SNI
-        function runAutoCorrect() {
-            const L = parseFloat(document.getElementById('valL').value);
-            const h = parseFloat(document.getElementById('valH').value);
-            const statusBox = document.getElementById('statusBox');
-            const statusMsg = document.getElementById('statusMsg');
+            statusDiv.innerHTML = '<p class="text-blue-500 animate-pulse uppercase tracking-tighter">Memproses Data SNI...</p>';
 
-            if (!L || !h) {
-                alert("Mohon isi panjang bentang dan tinggi rencana!");
-                return;
-            }
+            reader.onload = function(event) {
+                try {
+                    const data = new Uint8Array(event.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    
+                    const valL = firstSheet['B5'] ? firstSheet['B5'].v : null;
+                    const valH = firstSheet['B6'] ? firstSheet['B6'].v : null;
 
-            // Rumus SNI sederhana: L/16 (Tumpuan Sederhana)
-            const hMin = Math.ceil(L / 16);
+                    if (valL && valH) {
+                        const hMin = Math.ceil(valL / 16);
+                        if (valH >= hMin) {
+                            statusDiv.innerHTML = `
+                                <div class="bg-green-100 border-2 border-green-500 p-6 rounded-2xl text-green-800 animate-fadeIn">
+                                    <p class="text-3xl mb-2">✅</p>
+                                    <p class="uppercase font-black">VALID / BENAR</p>
+                                    <p class="text-[10px] mt-2 italic font-semibold">Sesuai standar SNI. Siap diarsipkan ke Fitur 3.</p>
+                                </div>`;
+                        } else {
+                            statusDiv.innerHTML = `
+                                <div class="bg-red-100 border-2 border-red-500 p-6 rounded-2xl text-red-800 animate-fadeIn">
+                                    <p class="text-3xl mb-2">❌</p>
+                                    <p class="uppercase font-black">TIDAK VALID</p>
+                                    <p class="text-[10px] mt-2 italic font-semibold">Kesalahan dimensi. Harap revisi laporan Anda.</p>
+                                </div>`;
+                        }
+                    } else {
+                        statusDiv.innerHTML = '<p class="text-orange-500 text-xs italic">Data (B5/B6) kosong. Cek template Anda.</p>';
+                    }
+                } catch (err) {
+                    statusDiv.innerHTML = '<p class="text-red-500 text-xs uppercase font-black">Gagal baca file.</p>';
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        });
 
-            if (h >= hMin) {
-                statusBox.className = "bg-green-100 border-4 border-green-500 rounded-3xl flex flex-col items-center justify-center p-8 text-center shadow-inner animate-fadeIn";
-                statusMsg.innerHTML = `
-                    <div class="text-5xl mb-4">✅</div>
-                    <div class="text-green-900 font-black text-2xl uppercase">SESUAI SNI</div>
-                    <div class="text-green-700 text-sm mt-2 font-bold italic">Tinggi balok Anda (${h}mm) sudah aman. Batas minimum SNI adalah ${hMin}mm. Laporan mingguan siap diarsip.</div>
-                `;
-            } else {
-                statusBox.className = "bg-red-100 border-4 border-red-500 rounded-3xl flex flex-col items-center justify-center p-8 text-center shadow-inner animate-fadeIn";
-                statusMsg.innerHTML = `
-                    <div class="text-5xl mb-4">❌</div>
-                    <div class="text-red-900 font-black text-2xl uppercase">TIDAK SESUAI</div>
-                    <div class="text-red-700 text-sm mt-2 font-bold italic">Bahaya! Tinggi balok kurang dari standar. Minimal harus ${hMin}mm menurut SNI. Mohon revisi desain/laporan.</div>
-                `;
-            }
-        }
+        document.getElementById('menuBtn').onclick = () => alert("Menu Pengaturan Pantau SNI");
     </script>
 </body>
 </html>
